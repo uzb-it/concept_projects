@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept Projects — Architect · Design · Build · Control</title>
+<meta name="description" content="Concept Projects — частное архитектурное бюро Умара Рахимова. Архитектура, дизайн интерьера, строительство и авторский контроль. Ограниченное число проектов.">
+<meta name="theme-color" content="#0b2219">
+<meta property="og:title" content="Concept Projects — Private Architecture Studio">
+<meta property="og:description" content="Architect · Design · Build · Control. Limited projects. Limited clients. Private only.">
+<meta property="og:image" content="assets/img/p07.jpg">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try{if(sessionStorage.getItem("cp-pt"))document.documentElement.classList.add("is-pt")}catch(e){}</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="is-loading">
+
+<!-- Логотип: 6 сложенных лент вокруг шестигранной апертуры -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="-56 -56 112 112">
+    <path d="M51 -19.67L51 13.28L14 34.64L3 28.29L40 6.93L40 -35.8L42.53 -34.33Z"/>
+    <path d="M42.53 34.33L14 50.81L-23 29.44L-23 16.74L14 38.11L51 16.74L51 19.67Z"/>
+    <path d="M-8.47 54L-37 37.53L-37 -5.2L-26 -11.55L-26 31.18L11 52.54L8.47 54Z"/>
+    <path d="M-51 19.67L-51 -13.28L-14 -34.64L-3 -28.29L-40 -6.93L-40 35.8L-42.53 34.33Z"/>
+    <path d="M-42.53 -34.33L-14 -50.81L23 -29.44L23 -16.74L-14 -38.11L-51 -16.74L-51 -19.67Z"/>
+    <path d="M8.47 -54L37 -37.53L37 5.2L26 11.55L26 -31.18L-11 -52.54L-8.47 -54Z"/>
+  </symbol>
+</svg>
+
+<!-- ============ PRELOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__panel loader__panel--top"></div>
+  <div class="loader__panel loader__panel--bottom"></div>
+  <div class="loader__inner">
+    <svg class="loader__mark" viewBox="-56 -56 112 112">
+      <path d="M51 -19.67L51 13.28L14 34.64L3 28.29L40 6.93L40 -35.8L42.53 -34.33Z"/>
+      <path d="M42.53 34.33L14 50.81L-23 29.44L-23 16.74L14 38.11L51 16.74L51 19.67Z"/>
+      <path d="M-8.47 54L-37 37.53L-37 -5.2L-26 -11.55L-26 31.18L11 52.54L8.47 54Z"/>
+      <path d="M-51 19.67L-51 -13.28L-14 -34.64L-3 -28.29L-40 -6.93L-40 35.8L-42.53 34.33Z"/>
+      <path d="M-42.53 -34.33L-14 -50.81L23 -29.44L23 -16.74L-14 -38.11L-51 -16.74L-51 -19.67Z"/>
+      <path d="M8.47 -54L37 -37.53L37 5.2L26 11.55L26 -31.18L-11 -52.54L-8.47 -54Z"/>
+    </svg>
+    <div class="loader__word">CONCEPT&nbsp;PROJECTS</div>
+    <div class="loader__count"><span id="loaderCount">000</span><i>%</i></div>
+    <div class="loader__line"><i id="loaderLine"></i></div>
+  </div>
+</div>
+
+<!-- ============ CURSOR / GRAIN / GRID ============ -->
+<div class="cursor" id="cursor"><span class="cursor__label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="blueprint" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="#top" class="brand" data-magnetic>
+    <svg class="brand__mark"><use href="#mark"/></svg>
+    <span class="brand__name">Concept<b>Projects</b></span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="#works" data-i18n="nav.works">Проекты</a>
+    <a href="#method" data-i18n="nav.method">Метод</a>
+    <a href="#process" data-i18n="nav.process">Процесс</a>
+    <a href="#founder" data-i18n="nav.founder">Основатель</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <div class="header__right">
+    <div class="clock"><span data-i18n="clock">Ташкент</span> <b id="clock">--:--</b></div>
+    <div class="lang" id="lang">
+      <button data-lang="ru" class="is-active">RU</button>
+      <button data-lang="uz">UZ</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="kk">KZ</button>
+      <button data-lang="tr">TR</button>
+    </div>
+    <a href="#access" class="btn btn--ghost" data-magnetic><span data-i18n="cta.short">Private access</span></a>
+    <button class="burger" id="burger" aria-label="Меню"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav>
+    <a href="#works"><em>01</em><span data-i18n="nav.works">Проекты</span></a>
+    <a href="#method"><em>02</em><span data-i18n="nav.method">Метод</span></a>
+    <a href="#process"><em>03</em><span data-i18n="nav.process">Процесс</span></a>
+    <a href="#founder"><em>04</em><span data-i18n="nav.founder">Основатель</span></a>
+    <a href="#geo"><em>05</em><span data-i18n="nav.geo">География</span></a>
+    <a href="#faq"><em>06</em><span>FAQ</span></a>
+    <a href="#access"><em>07</em><span data-i18n="cta.short">Private access</span></a>
+  </nav>
+  <div class="menu__foot">
+    <a href="tel:+998915251615">+998 91 525 16 15</a>
+    <a href="tel:+998884484448">+998 88 448 44 48</a>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__bg" id="heroBg"></div>
+  <div class="hero__vignette"></div>
+
+  <div class="hero__meta hero__meta--tl">
+    <span>41°18′N&nbsp;&nbsp;69°16′E</span>
+    <span data-i18n="hero.est">Частное бюро · Ташкент</span>
+  </div>
+
+  <div class="hero__hud"><span class="reel__rec"><i></i>REC</span><span id="reelTc">00:00:00:00</span><span>Showreel 2026</span></div>
+
+  <div class="hero__content">
+    <p class="eyebrow" data-reveal><span class="eyebrow__dash"></span><span data-i18n="hero.eyebrow">Concept Projects — частное архитектурное бюро</span></p>
+    <h1 class="hero__title">
+      <span class="line"><span class="split" data-i18n="hero.t1">Архитектура,</span></span>
+      <span class="line"><em class="split" data-i18n="hero.t2">которую</em></span>
+      <span class="line"><span class="split" data-i18n="hero.t3">не повторить</span></span>
+    </h1>
+  </div>
+
+  <div class="hero__bottom">
+    <ul class="pillars" id="pillars">
+      <li>Architect</li><li>Design</li><li>Build</li><li>Control</li>
+    </ul>
+    <div class="hero__limited">
+      <span>Limited projects</span><span>Limited clients</span><span>Private only</span>
+    </div>
+    <div class="hero__now"><b id="heroIdx">01</b><span>/ 12</span><em id="heroReelName"></em></div>
+    <button class="hero__play" id="reelPlay" data-magnetic aria-label="Play">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <span data-i18n="reel.play">Смотреть фильм</span>
+    </button>
+    <a href="#manifest" class="scroll-cue" data-magnetic>
+      <span data-i18n="hero.scroll">Листайте</span>
+      <i></i>
+    </a>
+  </div>
+  <div class="hero__scrub"><i id="heroScrub"></i></div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee__track" id="marquee">
+    <span>Architect</span><svg><use href="#mark"/></svg>
+    <span>Design</span><svg><use href="#mark"/></svg>
+    <span>Build</span><svg><use href="#mark"/></svg>
+    <span>Control</span><svg><use href="#mark"/></svg>
+    <span>Private only</span><svg><use href="#mark"/></svg>
+  </div>
+</section>
+
+<!-- ============ MANIFEST ============ -->
+<section class="manifest" id="manifest">
+  <div class="section-tag"><em>00</em><span data-i18n="tag.manifest">Манифест</span></div>
+  <p class="manifest__text" id="manifestText" data-i18n="manifest">Мы не продаём проекты. Мы выбираем, с кем их создавать. Каждый объект — от первой линии до последнего светильника — проходит через одну команду: архитектура, дизайн, строительство и контроль. Поэтому мы берём лишь несколько проектов в год.</p>
+  <div class="manifest__sign">
+    <svg><use href="#mark"/></svg>
+    <span>Umar Rakhimov<br><small data-i18n="founder.role">Основатель, архитектор</small></span>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="stat"><b data-count="518" data-suffix="K">0</b><span data-i18n="stat.audience">аудитория основателя</span></div>
+  <div class="stat"><b data-count="7">0</b><span data-i18n="stat.countries">стран: закупка и реализация</span></div>
+  <div class="stat"><b data-count="4">0</b><span data-i18n="stat.stages">этапа под одной ответственностью</span></div>
+  <div class="stat"><b data-count="24" data-suffix="ч" data-i18n-suffix="stat.h">0</b><span data-i18n="stat.reply">личный ответ основателя на заявку</span></div>
+</section>
+
+<!-- ============ WORKS (horizontal) ============ -->
+<section class="works" id="works">
+  <div class="works__pin" id="worksPin">
+    <div class="works__head" id="worksHead">
+      <div class="section-tag"><em>01</em><span data-i18n="tag.works">Избранные проекты</span></div>
+      <h2 class="h2"><span data-i18n="works.title">Интерьеры,<br>собранные вручную</span></h2>
+      <p class="muted" data-i18n="works.lead">Каждое пространство — единый замысел: камень, дерево, металл и свет подобраны под конкретного человека.</p>
+    </div>
+    <div class="works__space"><div class="works__track" id="worksTrack"></div></div>
+    <div class="works__hud">
+      <div class="works__counter"><b id="worksIdx">01</b> / <span>12</span></div>
+      <div class="works__now"><b id="worksName"></b><span id="worksCat"></span></div>
+      <a class="works__open" id="worksOpen" href="project.html" data-magnetic><span data-i18n="open">Открыть</span> →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section class="method" id="method">
+  <div class="method__intro">
+    <div class="section-tag"><em>02</em><span data-i18n="tag.method">Метод</span></div>
+    <h2 class="h2" data-i18n="method.title">Четыре слова.<br><em>Одна ответственность.</em></h2>
+  </div>
+  <div class="method__stack">
+    <article class="mcard" style="--i:0">
+      <div class="mcard__num">I</div>
+      <div class="mcard__body">
+        <h3>Architect</h3>
+        <p data-i18n="m1">Концепция, планировка, фасады. Мы начинаем с образа жизни заказчика — и только потом переходим к квадратным метрам.</p>
+        <ul><li data-i18n="m1a">Обмеры и анализ участка</li><li data-i18n="m1b">Архитектурная концепция</li><li data-i18n="m1c">Рабочая документация</li></ul>
+      </div>
+      <img src="assets/img/p07.jpg" alt="" loading="lazy">
+    </article>
+    <article class="mcard" style="--i:1">
+      <div class="mcard__num">II</div>
+      <div class="mcard__body">
+        <h3>Design</h3>
+        <p data-i18n="m2">Фотореалистичная визуализация каждого помещения. Материалы, свет, мебель — согласованы до того, как начнётся стройка.</p>
+        <ul><li data-i18n="m2a">3D-визуализация</li><li data-i18n="m2b">Подбор материалов</li><li data-i18n="m2c">Сценарии освещения</li></ul>
+      </div>
+      <img src="assets/img/p03.jpg" alt="" loading="lazy">
+    </article>
+    <article class="mcard" style="--i:2">
+      <div class="mcard__num">III</div>
+      <div class="mcard__body">
+        <h3>Build</h3>
+        <p data-i18n="m3">Собственные бригады и прямые поставки с фабрик Китая, Турции и ОАЭ. Без посредников — без компромиссов.</p>
+        <ul><li data-i18n="m3a">Ремонт под ключ</li><li data-i18n="m3b">Поставки напрямую с фабрик</li><li data-i18n="m3c">Мебель на заказ</li></ul>
+      </div>
+      <img src="assets/img/p09.jpg" alt="" loading="lazy">
+    </article>
+    <article class="mcard" style="--i:3">
+      <div class="mcard__num">IV</div>
+      <div class="mcard__body">
+        <h3>Control</h3>
+        <p data-i18n="m4">Авторский надзор до последнего винта. Результат совпадает с визуализацией — это наше обязательство.</p>
+        <ul><li data-i18n="m4a">Авторский надзор</li><li data-i18n="m4b">Еженедельные отчёты</li><li data-i18n="m4c">Сдача объекта</li></ul>
+      </div>
+      <img src="assets/img/p01.jpg" alt="" loading="lazy">
+    </article>
+  </div>
+</section>
+
+<!-- ============ EXPAND ============ -->
+<section class="expand" id="expand">
+  <div class="expand__pin">
+    <div class="expand__media"><img src="assets/img/p02.jpg" alt="Terracotta Master"></div>
+    <div class="expand__words" aria-hidden="true"><span>Private</span><span>Only</span></div>
+    <div class="expand__caption">
+      <p class="eyebrow"><span class="eyebrow__dash"></span><span data-i18n="expand.k">Только частные заказы</span></p>
+      <h2 class="h2" data-i18n="expand.t">Каждый проект — <em>в единственном экземпляре</em></h2>
+      <a href="project.html?p=terracotta-master" class="btn btn--ghost" data-label="Terracotta Master" data-magnetic><span data-i18n="open">Открыть</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS (light) ============ -->
+<section class="process tone-light" id="process">
+  <div class="process__aside">
+    <div class="section-tag"><em>03</em><span data-i18n="tag.process">Процесс</span></div>
+    <h2 class="h2" data-i18n="process.title">От первой встречи<br>до <em>ключей</em></h2>
+    <p class="muted" data-i18n="process.lead">Семь этапов, один ответственный. Вы всегда знаете, что происходит на объекте и что будет дальше.</p>
+    <div class="process__total"><b data-i18n="process.total">6–14</b><span data-i18n="process.totalL">месяцев — типичный полный цикл*</span></div>
+  </div>
+  <ol class="steps" id="steps">
+    <li class="step"><span class="step__n">01</span><div><h3 data-i18n="s1">Знакомство и бриф</h3><p data-i18n="s1p">Личная встреча с Умаром. Обсуждаем образ жизни, привычки, бюджет и ожидания.</p></div><i data-i18n="s1t">1 неделя</i></li>
+    <li class="step"><span class="step__n">02</span><div><h3 data-i18n="s2">Обмеры и планировка</h3><p data-i18n="s2p">Точные обмеры объекта и несколько вариантов планировочных решений.</p></div><i data-i18n="s2t">1–2 недели</i></li>
+    <li class="step"><span class="step__n">03</span><div><h3 data-i18n="s3">Концепция и 3D</h3><p data-i18n="s3p">Фотореалистичная визуализация каждого помещения — вы видите дом до начала стройки.</p></div><i data-i18n="s3t">3–5 недель</i></li>
+    <li class="step"><span class="step__n">04</span><div><h3 data-i18n="s4">Рабочая документация</h3><p data-i18n="s4p">Чертежи для строителей: электрика, свет, сантехника, узлы и спецификации.</p></div><i data-i18n="s4t">2–3 недели</i></li>
+    <li class="step"><span class="step__n">05</span><div><h3 data-i18n="s5">Закупка на фабриках</h3><p data-i18n="s5p">Лично выбираем мебель, камень и свет на фабриках Китая, Турции и ОАЭ.</p></div><i data-i18n="s5t">4–8 недель</i></li>
+    <li class="step"><span class="step__n">06</span><div><h3 data-i18n="s6">Строительство</h3><p data-i18n="s6p">Собственные бригады, еженедельные фото- и видеоотчёты, прозрачная смета.</p></div><i data-i18n="s6t">3–8 месяцев</i></li>
+    <li class="step"><span class="step__n">07</span><div><h3 data-i18n="s7">Авторский надзор и сдача</h3><p data-i18n="s7p">Контроль до последней детали, декор, расстановка — и передача ключей.</p></div><i data-i18n="s7t">финал</i></li>
+  </ol>
+  <p class="process__note" data-i18n="process.note">* Сроки ориентировочные и зависят от площади и сложности объекта.</p>
+</section>
+
+<!-- ============ COMPARE: drawing → interior ============ -->
+<section class="compare" id="compare">
+  <div class="compare__text">
+    <div class="section-tag"><em>04</em><span data-i18n="tag.compare">Чертёж → Интерьер</span></div>
+    <h2 class="h2" data-i18n="compare.title">Каждая линия<br>становится <em>реальностью</em></h2>
+    <p class="muted" data-i18n="compare.lead">Потяните ползунок: слева — линии проекта, справа — готовое пространство.</p>
+    <div class="compare__tabs" id="compareTabs">
+      <button class="is-active" data-img="p04">Bronze Living</button>
+      <button data-img="p07">Grand Dining</button>
+      <button data-img="p01">Travertine Suite</button>
+    </div>
+  </div>
+  <div class="compare__wrap" data-dim>
+  <div class="compare__stage" id="compare">
+    <img class="compare__photo" id="comparePhoto" src="assets/img/p04.jpg" alt="">
+    <canvas class="compare__draw" id="compareDraw"></canvas>
+    <div class="compare__handle" id="compareHandle"><span>⟷</span></div>
+    <span class="compare__lbl compare__lbl--l" data-i18n="compare.l">Чертёж</span>
+    <span class="compare__lbl compare__lbl--r" data-i18n="compare.r">Интерьер</span>
+  </div>
+  </div>
+</section>
+
+<div class="film" id="film" aria-hidden="true">
+  <div class="film__frame" id="filmFrame"></div>
+  <div class="film__cap"><b id="filmNum">01</b><span id="filmName"></span></div>
+  <div class="film__bar"><i id="filmBar"></i></div>
+  <button class="film__close" id="filmClose" aria-label="Close">×</button>
+</div>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder" id="founder">
+  <div class="founder__grid">
+    <div class="founder__visual">
+      <div class="founder__frame" data-dim>
+        <img src="assets/img/owner.jpg" alt="Umar Rakhimov">
+        <svg class="founder__ring" viewBox="0 0 200 200">
+          <defs><path id="circ" d="M100,100 m-82,0 a82,82 0 1,1 164,0 a82,82 0 1,1 -164,0"/></defs>
+          <text><textPath href="#circ" textLength="512" lengthAdjust="spacing">ARCHITECT • DESIGN • BUILD • CONTROL • LIMITED PROJECTS • PRIVATE ONLY •</textPath></text>
+        </svg>
+      </div>
+    </div>
+    <div class="founder__text">
+      <div class="section-tag"><em>05</em><span data-i18n="tag.founder">Основатель</span></div>
+      <h2 class="founder__name"><span>Umar</span><em>Rakhimov</em></h2>
+      <p class="founder__role" data-i18n="founder.role2">Дизайнер · Архитектор · Основатель Concept Projects</p>
+      <p class="lead" data-i18n="founder.bio">Умар лично ведёт каждый проект бюро — от первого эскиза до сдачи ключей. Его путь к идеальному материалу проходит через фабрики Ханчжоу и Гуанчжоу, мастерские Турции, Дубая и Саудовской Аравии. Более полумиллиона человек следят за его работой — но работает он лишь с несколькими клиентами в год.</p>
+      <div class="founder__links">
+        <a href="https://www.instagram.com/umar_concept_/" target="_blank" rel="noopener" data-magnetic><span>@umar_concept_</span><small>518K</small></a>
+        <a href="https://www.instagram.com/concept_projects_/" target="_blank" rel="noopener" data-magnetic><span>@concept_projects_</span><small>Results</small></a>
+        <a href="https://www.instagram.com/linia_systems/" target="_blank" rel="noopener" data-magnetic><span>@linia_systems</span><small>Projects</small></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PARTNERS ============ -->
+<section class="partners" id="partners">
+  <div class="partners__head">
+    <div class="section-tag"><em>06</em><span data-i18n="tag.partners">Фабрики и партнёры</span></div>
+    <p class="muted" data-i18n="partners.lead">Фабрики, которые мы посещаем лично, — чтобы каждая позиция в проекте была проверена руками.</p>
+  </div>
+  <div class="partners__grid">
+    <div class="partner" data-magnetic><b>SUNON</b><span>Hangzhou · China</span><i data-i18n="pt.sunon">Мебель</i></div>
+    <div class="partner" data-magnetic><b>ARROW</b><span>Guangzhou · China</span><i data-i18n="pt.arrow">Сантехника и керамика</i></div>
+    <div class="partner" data-magnetic><b>LINIA<br>SYSTEMS</b><span>Tashkent · Uzbekistan</span><i data-i18n="pt.linia">Проекты студии</i></div>
+    <div class="partner" data-magnetic><b>TÜRKİYE</b><span>Istanbul · Türkiye</span><i data-i18n="pt.tr">Камень и текстиль</i></div>
+    <div class="partner" data-magnetic><b>DUBAI</b><span>Dubai · UAE</span><i data-i18n="pt.dxb">Дизайн и свет</i></div>
+    <div class="partner" data-magnetic><b>RIYADH</b><span>Riyadh · Saudi Arabia</span><i data-i18n="pt.ruh">Реализация проектов</i></div>
+  </div>
+</section>
+
+<!-- ============ GEO ============ -->
+<section class="geo" id="geo">
+  <div class="geo__text">
+    <div class="section-tag"><em>07</em><span data-i18n="tag.geo">География</span></div>
+    <h2 class="h2" data-i18n="geo.title">Материалы<br>со всего <em>мира</em></h2>
+    <p class="muted" data-i18n="geo.lead">Мы лично выбираем каждую позицию на фабриках — и привозим в Узбекистан то, чего нет на местном рынке.</p>
+    <ol class="cities" id="cities">
+      <li data-city="0"><b>Tashkent</b><span>Uzbekistan</span><i>HQ</i></li>
+      <li data-city="1"><b>Hangzhou</b><span>China</span><i>Sunon</i></li>
+      <li data-city="2"><b>Guangzhou</b><span>China</span><i>Arrow</i></li>
+      <li data-city="3"><b>Istanbul</b><span>Türkiye</span><i>Stone · Textile</i></li>
+      <li data-city="4"><b>Dubai</b><span>UAE</span><i>Design</i></li>
+      <li data-city="5"><b>Riyadh</b><span>Saudi Arabia</span><i>Projects</i></li>
+      <li data-city="6"><b>Almaty</b><span>Kazakhstan</span><i>Projects</i></li>
+    </ol>
+  </div>
+  <div class="geo__globe">
+    <canvas id="globe"></canvas>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<!-- ЗАГЛУШКА: тексты отзывов — примеры. Перед запуском заменить реальными отзывами клиентов (раздел «Отзывы» в Instagram). -->
+<section class="reviews" id="reviews" hidden><!-- hidden until real client reviews arrive: remove "hidden" -->
+  <div class="section-tag"><em>08</em><span data-i18n="tag.reviews">Отзывы</span></div>
+  <div class="reviews__stage">
+    <svg class="reviews__mark"><use href="#mark"/></svg>
+    <div class="reviews__track" id="reviewsTrack">
+      <figure class="review is-active">
+        <blockquote data-i18n="r1">«Мы увидели дом в 3D до того, как была заложена первая стена — и в итоге он совпал с картинкой до мелочей.»</blockquote>
+        <figcaption><b data-i18n="r1n">Частный клиент</b><span data-i18n="r1m">Дом · Ташкент</span></figcaption>
+      </figure>
+      <figure class="review">
+        <blockquote data-i18n="r2">«Умар лично ездил с нами на фабрику в Гуанчжоу. Такого уровня внимания мы не встречали ни у одной студии.»</blockquote>
+        <figcaption><b data-i18n="r2n">Частный клиент</b><span data-i18n="r2m">Квартира · Ташкент</span></figcaption>
+      </figure>
+      <figure class="review">
+        <blockquote data-i18n="r3">«Еженедельные отчёты, прозрачная смета и ни одного сорванного срока. Шоурум открылся точно в день, о котором договорились.»</blockquote>
+        <figcaption><b data-i18n="r3n">Коммерческий клиент</b><span data-i18n="r3m">Шоурум</span></figcaption>
+      </figure>
+    </div>
+    <div class="reviews__nav">
+      <button id="revPrev" aria-label="Prev" data-magnetic>←</button>
+      <span class="reviews__count"><b id="revIdx">01</b> / 03</span>
+      <button id="revNext" aria-label="Next" data-magnetic>→</button>
+      <a class="reviews__more" href="https://www.instagram.com/umar_concept_/" target="_blank" rel="noopener" data-i18n="reviews.more">Видео-отзывы в Instagram ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ (light) ============ -->
+<section class="faq tone-light" id="faq">
+  <div class="faq__aside">
+    <div class="section-tag"><em>08</em><span>FAQ</span></div>
+    <h2 class="h2" data-i18n="faq.title">Частые<br><em>вопросы</em></h2>
+  </div>
+  <div class="faq__list" id="faqList">
+    <details class="qa"><summary><span data-i18n="q1">Сколько стоит проект?</span><i></i></summary><p data-i18n="a1">Каждый объект уникален, поэтому стоимость рассчитывается индивидуально после брифа и обмеров. Точную смету вы получаете до начала работ — и она не меняется без вашего согласия.</p></details>
+    <details class="qa"><summary><span data-i18n="q2">Сколько времени занимает работа?</span><i></i></summary><p data-i18n="a2">Дизайн-проект — в среднем 6–10 недель. Полный цикл с ремонтом и закупкой — от 6 месяцев, в зависимости от площади и сложности.</p></details>
+    <details class="qa"><summary><span data-i18n="q3">Можно заказать только дизайн-проект?</span><i></i></summary><p data-i18n="a3">Да. Вы можете заказать только проект с визуализацией и документацией или полный цикл Architect → Design → Build → Control.</p></details>
+    <details class="qa"><summary><span data-i18n="q4">Работаете ли вы за пределами Ташкента?</span><i></i></summary><p data-i18n="a4">Да. Мы реализуем проекты по Узбекистану, а также в Казахстане, ОАЭ и Саудовской Аравии.</p></details>
+    <details class="qa"><summary><span data-i18n="q5">Как происходит закупка мебели и материалов?</span><i></i></summary><p data-i18n="a5">Мы лично выбираем позиции на фабриках Китая, Турции и ОАЭ, контролируем производство и организуем доставку до объекта.</p></details>
+    <details class="qa"><summary><span data-i18n="q6">Почему вы берёте мало проектов?</span><i></i></summary><p data-i18n="a6">Потому что основатель лично ведёт каждый объект. Ограниченное число клиентов — это гарантия внимания и качества.</p></details>
+  </div>
+</section>
+
+<!-- ============ ACCESS ============ -->
+<section class="access" id="access">
+  <div class="access__bg"><img src="assets/img/p06.jpg" alt=""></div>
+  <div class="access__card">
+    <div class="section-tag"><em>09</em><span>Private access</span></div>
+    <h2 class="h2" data-i18n="access.title">Заявка<br>на <em>сотрудничество</em></h2>
+    <p class="muted" data-i18n="access.lead">Мы принимаем ограниченное число проектов. Расскажите о своём — мы ответим лично.</p>
+
+    <form class="form" id="form" novalidate>
+      <div class="form__step is-active" data-step="0">
+        <p class="form__q" data-i18n="f.q1">Какой объект?</p>
+        <div class="chips">
+          <label><input type="radio" name="type" value="Квартира" checked><span data-i18n="f.flat">Квартира</span></label>
+          <label><input type="radio" name="type" value="Дом"><span data-i18n="f.house">Частный дом</span></label>
+          <label><input type="radio" name="type" value="Коммерция"><span data-i18n="f.comm">Коммерция</span></label>
+          <label><input type="radio" name="type" value="Архитектура"><span data-i18n="f.arch">Архитектура</span></label>
+        </div>
+      </div>
+      <div class="form__step" data-step="1">
+        <p class="form__q" data-i18n="f.q2">Площадь объекта</p>
+        <div class="range">
+          <output id="areaOut">250</output><small>m²</small>
+          <input type="range" name="area" id="area" min="50" max="2000" step="10" value="250">
+        </div>
+        <div class="chips">
+          <label><input type="radio" name="scope" value="Дизайн-проект" checked><span data-i18n="f.s1">Дизайн-проект</span></label>
+          <label><input type="radio" name="scope" value="Под ключ"><span data-i18n="f.s2">Под ключ</span></label>
+          <label><input type="radio" name="scope" value="Полный цикл"><span data-i18n="f.s3">Architect → Control</span></label>
+        </div>
+      </div>
+      <div class="form__step" data-step="2">
+        <p class="form__q" data-i18n="f.q3">Как к вам обращаться?</p>
+        <div class="field"><input name="name" id="fName" required autocomplete="name" placeholder=" "><label for="fName" data-i18n="f.name">Имя</label></div>
+        <div class="field"><input name="phone" id="fPhone" required type="tel" autocomplete="tel" placeholder=" "><label for="fPhone" data-i18n="f.phone">Телефон</label></div>
+      </div>
+      <div class="form__step form__done" data-step="3">
+        <svg><use href="#mark"/></svg>
+        <p class="form__q" data-i18n="f.done">Заявка принята.</p>
+        <p class="muted" data-i18n="f.done2">Мы свяжемся с вами лично в течение 24 часов.</p>
+      </div>
+      <div class="form__nav">
+        <div class="form__dots"><i class="is-active"></i><i></i><i></i></div>
+        <button type="button" class="btn btn--line" id="formBack" data-i18n="f.back">Назад</button>
+        <button type="button" class="btn btn--gold" id="formNext" data-magnetic><span data-i18n="f.next">Далее</span></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__top">
+    <div>
+      <p class="footer__label" data-i18n="footer.call">Прямая линия</p>
+      <a class="footer__big" href="tel:+998915251615" data-magnetic>+998 91 525 16 15</a>
+      <a class="footer__big" href="tel:+998884484448" data-magnetic>+998 88 448 44 48</a>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <p class="footer__label">Instagram</p>
+        <a href="https://www.instagram.com/concept_projects_/" target="_blank" rel="noopener">@concept_projects_</a>
+        <a href="https://www.instagram.com/umar_concept_/" target="_blank" rel="noopener">@umar_concept_</a>
+        <a href="https://www.instagram.com/linia_systems/" target="_blank" rel="noopener">@linia_systems</a>
+      </div>
+      <div>
+        <p class="footer__label">Telegram</p>
+        <a href="https://t.me/concept_projects" target="_blank" rel="noopener">t.me/concept_projects</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__word" aria-hidden="true">
+    <svg><use href="#mark"/></svg><span>CONCEPT</span>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Concept Projects</span>
+    <span>Architect • Design • Build • Control</span>
+    <a href="#top" data-i18n="footer.top">Наверх ↑</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/fx.js"></script>
+</body>
+</html>

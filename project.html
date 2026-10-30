@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project — Concept Projects</title>
+<meta name="description" content="Concept Projects — частное архитектурное бюро Умара Рахимова. Архитектура, дизайн интерьера, строительство и авторский контроль. Ограниченное число проектов.">
+<meta name="theme-color" content="#0b2219">
+<meta property="og:title" content="Concept Projects — Private Architecture Studio">
+<meta property="og:description" content="Architect · Design · Build · Control. Limited projects. Limited clients. Private only.">
+<meta property="og:image" content="assets/img/p07.jpg">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try{if(sessionStorage.getItem("cp-pt"))document.documentElement.classList.add("is-pt")}catch(e){}</script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="page-project">
+
+<!-- Логотип: 6 сложенных лент вокруг шестигранной апертуры -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="-56 -56 112 112">
+    <path d="M51 -19.67L51 13.28L14 34.64L3 28.29L40 6.93L40 -35.8L42.53 -34.33Z"/>
+    <path d="M42.53 34.33L14 50.81L-23 29.44L-23 16.74L14 38.11L51 16.74L51 19.67Z"/>
+    <path d="M-8.47 54L-37 37.53L-37 -5.2L-26 -11.55L-26 31.18L11 52.54L8.47 54Z"/>
+    <path d="M-51 19.67L-51 -13.28L-14 -34.64L-3 -28.29L-40 -6.93L-40 35.8L-42.53 34.33Z"/>
+    <path d="M-42.53 -34.33L-14 -50.81L23 -29.44L23 -16.74L-14 -38.11L-51 -16.74L-51 -19.67Z"/>
+    <path d="M8.47 -54L37 -37.53L37 5.2L26 11.55L26 -31.18L-11 -52.54L-8.47 -54Z"/>
+  </symbol>
+</svg>
+
+<!-- ============ CURSOR / GRAIN / GRID ============ -->
+<div class="cursor" id="cursor"><span class="cursor__label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="blueprint" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <a href="index.html" class="brand" data-magnetic>
+    <svg class="brand__mark"><use href="#mark"/></svg>
+    <span class="brand__name">Concept<b>Projects</b></span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="index.html#works" data-i18n="nav.works">Проекты</a>
+    <a href="index.html#method" data-i18n="nav.method">Метод</a>
+    <a href="index.html#process" data-i18n="nav.process">Процесс</a>
+    <a href="index.html#founder" data-i18n="nav.founder">Основатель</a>
+    <a href="index.html#faq">FAQ</a>
+  </nav>
+  <div class="header__right">
+    <div class="clock"><span data-i18n="clock">Ташкент</span> <b id="clock">--:--</b></div>
+    <div class="lang" id="lang">
+      <button data-lang="ru" class="is-active">RU</button>
+      <button data-lang="uz">UZ</button>
+      <button data-lang="en">EN</button>
+      <button data-lang="kk">KZ</button>
+      <button data-lang="tr">TR</button>
+    </div>
+    <a href="index.html#access" class="btn btn--ghost" data-magnetic><span data-i18n="cta.short">Private access</span></a>
+    <button class="burger" id="burger" aria-label="Меню"><i></i><i></i></button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav>
+    <a href="index.html#works"><em>01</em><span data-i18n="nav.works">Проекты</span></a>
+    <a href="index.html#method"><em>02</em><span data-i18n="nav.method">Метод</span></a>
+    <a href="index.html#founder"><em>03</em><span data-i18n="nav.founder">Основатель</span></a>
+    <a href="index.html#geo"><em>04</em><span data-i18n="nav.geo">География</span></a>
+    <a href="index.html#access"><em>05</em><span data-i18n="cta.short">Private access</span></a>
+  </nav>
+  <div class="menu__foot">
+    <a href="tel:+998915251615">+998 91 525 16 15</a>
+    <a href="tel:+998884484448">+998 88 448 44 48</a>
+  </div>
+</div>
+
+<main class="pp" id="top">
+
+<!-- ============ PROJECT HERO ============ -->
+<section class="pp-hero">
+  <div class="pp-hero__text">
+    <a class="pp-back" href="index.html#works" data-magnetic><span class="pp-back__arrow">←</span><span data-i18n="pr.back">Все проекты</span></a>
+    <div class="pp-hero__idx"><b id="ppIdx">01</b><span>/ 12</span></div>
+    <p class="eyebrow"><span class="eyebrow__dash"></span><span id="ppCat"></span></p>
+    <h1 class="pp-title" id="ppTitle"></h1>
+  </div>
+  <div class="pp-hero__media"><img id="ppImg" alt=""></div>
+  <div class="pp-hero__scroll"><i></i></div>
+</section>
+
+<!-- ============ META ============ -->
+<section class="pp-meta">
+  <div><span data-i18n="pr.cat">Тип</span><b id="ppMetaCat"></b></div>
+  <div><span data-i18n="pr.year">Год</span><b id="ppYear"></b></div>
+  <div><span data-i18n="pr.loc">Локация</span><b data-i18n="pr.locv">Конфиденциально</b></div>
+  <div><span data-i18n="pr.scope">Этапы</span><b>Architect · Design</b></div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="pp-story">
+  <svg class="pp-story__mark"><use href="#mark"/></svg>
+  <p class="pp-desc" id="ppDesc"></p>
+</section>
+
+<!-- ============ PALETTE ============ -->
+<section class="pp-palette">
+  <div class="pp-palette__head">
+    <div class="section-tag"><em>01</em><span data-i18n="pr.palette">Палитра материалов</span></div>
+    <p class="muted" data-i18n="pr.palette2">Цвета, извлечённые из проекта</p>
+  </div>
+  <div class="pp-swatches" id="ppSwatches"></div>
+  <ul class="pp-materials" id="ppMaterials"></ul>
+</section>
+
+<!-- ============ DETAILS ============ -->
+<section class="pp-details">
+  <div class="section-tag"><em>02</em><span data-i18n="pr.details">Детали</span></div>
+  <div class="pp-details__grid" id="ppDetails"></div>
+</section>
+
+<!-- ============ FULL ============ -->
+<section class="pp-full">
+  <div class="pp-full__word" id="ppWord" aria-hidden="true"></div>
+  <div class="pp-full__img" data-gl data-cursor="view"><img id="ppFull" alt=""></div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="pp-cta">
+  <h2 class="h2" data-i18n="pr.cta">Хотите такой же уровень?</h2>
+  <a href="index.html#access" class="btn btn--gold" data-magnetic><span data-i18n="pr.cta2">Оставить заявку</span></a>
+</section>
+
+<!-- ============ NEXT ============ -->
+<a class="pp-next" id="ppNext" href="project.html">
+  <span class="pp-next__label" data-i18n="pr.next">Следующий проект</span>
+  <b class="pp-next__name" id="ppNextName"></b>
+  <span class="pp-next__arrow">→</span>
+  <div class="pp-next__preview"><img id="ppNextImg" alt=""></div>
+</a>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__top">
+    <div>
+      <p class="footer__label" data-i18n="footer.call">Прямая линия</p>
+      <a class="footer__big" href="tel:+998915251615" data-magnetic>+998 91 525 16 15</a>
+      <a class="footer__big" href="tel:+998884484448" data-magnetic>+998 88 448 44 48</a>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <p class="footer__label">Instagram</p>
+        <a href="https://www.instagram.com/concept_projects_/" target="_blank" rel="noopener">@concept_projects_</a>
+        <a href="https://www.instagram.com/umar_concept_/" target="_blank" rel="noopener">@umar_concept_</a>
+        <a href="https://www.instagram.com/linia_systems/" target="_blank" rel="noopener">@linia_systems</a>
+      </div>
+      <div>
+        <p class="footer__label">Telegram</p>
+        <a href="https://t.me/concept_projects" target="_blank" rel="noopener">t.me/concept_projects</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer__word" aria-hidden="true">
+    <svg><use href="#mark"/></svg><span>CONCEPT</span>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Concept Projects</span>
+    <span>Architect • Design • Build • Control</span>
+    <a href="#top" data-i18n="footer.top">Наверх ↑</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/project.js"></script>
+<script type="module" src="assets/js/fx.js"></script>
+</body>
+</html>

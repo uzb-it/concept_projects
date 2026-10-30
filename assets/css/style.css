@@ -696,3 +696,14 @@ body.is-loading .dial, body.menu-open .dial { opacity: 0; pointer-events: none; 
 .works .work__cap, .works .work__num { display: none; }
 
 [hidden] { display: none !important; }
+
+/* very narrow phones (≤ 400px): keep the burger on screen, nothing wider than the viewport */
+@media (max-width: 400px) {
+  .brand { gap: 8px; }
+  .brand__mark { width: 28px; height: 28px; }
+  .brand__name { font-size: 14px; letter-spacing: .08em; }
+  .stat { padding: 24px 10px; }
+  .stat b { font-size: 44px; }
+  .stat span { font-size: 9.5px; letter-spacing: .14em; }
+}
+html { overflow-x: clip; }

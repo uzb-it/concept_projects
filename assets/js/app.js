@@ -237,8 +237,7 @@
   addEventListener('resize', () => { if (Math.abs(cmpStage.clientWidth - cmpW) > 40) { cmpW = cmpStage.clientWidth; loadCompare($('#compareTabs .is-active').dataset.img); } });
 
   /* ---------------- first screen: full-bleed film, played by scrolling ---------------- */
-  const heroBg = $('#heroBg'), heroName = $('#heroReelName'), heroIdx = $('#heroIdx'), tc = $('#reelTc');
-  const FILM_SECONDS = 48; // timecode length shown while scrubbing
+  const heroBg = $('#heroBg'), heroName = $('#heroReelName'), heroIdx = $('#heroIdx');
   let heroVideo = null, frames = [];
   if (window.CP_REEL_VIDEO) {
     heroBg.innerHTML = `<video src="${window.CP_REEL_VIDEO}" muted playsinline preload="auto"></video>`;
@@ -249,8 +248,7 @@
   }
   // p: 0 → 1 across the whole film
   function setFilm(p) {
-    const pad = v => String(v).padStart(2, '0'), f = Math.floor(p * FILM_SECONDS * 24);
-    tc.textContent = `00:${pad(Math.floor(f / 1440) % 60)}:${pad(Math.floor(f / 24) % 60)}:${pad(f % 24)}`;
+    const pad = v => String(v).padStart(2, '0');
     const scrub = $('#heroScrub'); if (scrub) scrub.style.transform = `scaleX(${p})`;
     if (heroVideo) { if (heroVideo.duration) heroVideo.currentTime = p * heroVideo.duration; return; }
     const pos = p * (frames.length - 1), cur = Math.round(pos);

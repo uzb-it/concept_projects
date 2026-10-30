@@ -75,7 +75,11 @@
     [41.30, 69.24], [30.27, 120.15], [23.13, 113.26], [41.01, 28.98], [25.20, 55.27], [24.71, 46.68], [43.24, 76.89]
   ];
   const globe = $('#globe'), gx = globe.getContext('2d');
-  let dots3 = [], activeCity = -1, gRot = { lon: 72, lat: 28 }, gDrag = null, gVisible = false;
+  // gRot is what is drawn; gAim is where it is heading. Every frame gRot eases toward gAim,
+  // so drags, auto-spin and city focus all blend smoothly. gSpin = inertia after a throw (deg/s).
+  let dots3 = [], activeCity = -1, gRot = { lon: 72, lat: 28 }, gAim = { lon: 72, lat: 28 }, gSpin = 0,
+    gDrag = null, gVisible = false, gLast = 0;
+  const AUTO_SPIN = -5; // deg/s, negative = surface moves west → east like the real Earth
   const rad = d => d * Math.PI / 180;
   const toXYZ = (lat, lon) => [Math.cos(rad(lat)) * Math.sin(rad(lon)), Math.sin(rad(lat)), Math.cos(rad(lat)) * Math.cos(rad(lon))];
 
@@ -118,13 +122,15 @@
   }
   loadLand();
 
+  // rotation sines/cosines are computed once per frame, not once per dot
+  let cLo = 1, sLo = 0, cLa = 1, sLa = 0;
   function project(p, R, cx, cy) {
-    const lo = rad(gRot.lon), la = rad(gRot.lat);
     // rotate around Y (longitude) then X (latitude)
-    let x = p[0] * Math.cos(-lo) + p[2] * Math.sin(-lo), z = -p[0] * Math.sin(-lo) + p[2] * Math.cos(-lo), y = p[1];
-    const y2 = y * Math.cos(la) - z * Math.sin(la), z2 = y * Math.sin(la) + z * Math.cos(la);
+    const x = p[0] * cLo - p[2] * sLo, z = p[0] * sLo + p[2] * cLo, y = p[1];
+    const y2 = y * cLa - z * sLa, z2 = y * sLa + z * cLa;
     return [cx + x * R, cy - y2 * R, z2];
   }
+  const DOT_LEVELS = 8; // dots are drawn in a few brightness batches instead of one fill per dot
   function slerp(a, b, t) {
     const d = Math.acos(Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2])), s = Math.sin(d);
     const k1 = Math.sin((1 - t) * d) / s, k2 = Math.sin(t * d) / s;
@@ -132,24 +138,39 @@
   }
   function drawGlobe(time) {
     requestAnimationFrame(drawGlobe);
+    const dt = Math.min(.05, (time - gLast) / 1000 || 0); gLast = time;
     if (!gVisible) return;
     const dpr = Math.min(devicePixelRatio, 2), W = globe.clientWidth, H = globe.clientHeight;
-    if (globe.width !== W * dpr) { globe.width = W * dpr; globe.height = H * dpr; }
+    if (globe.width !== Math.round(W * dpr)) { globe.width = Math.round(W * dpr); globe.height = Math.round(H * dpr); }
     gx.setTransform(dpr, 0, 0, dpr, 0, 0); gx.clearRect(0, 0, W, H);
     const R = Math.min(W, H) * .42, cx = W / 2, cy = H / 2;
-    if (!gDrag) gRot.lon += Math.sin(time / 6000) * .02;
+
+    if (!gDrag) {
+      // steady spin (paused while a city is focused) plus decaying throw inertia
+      gAim.lon += ((activeCity < 0 ? AUTO_SPIN : 0) + gSpin) * dt;
+      gSpin *= Math.exp(-dt * 2.2);
+    }
+    const k = 1 - Math.exp(-dt * (gDrag ? 14 : 6));
+    gRot.lon += (gAim.lon - gRot.lon) * k;
+    gRot.lat += (gAim.lat - gRot.lat) * k;
+    const lo = rad(gRot.lon), la = rad(gRot.lat);
+    cLo = Math.cos(lo); sLo = Math.sin(lo); cLa = Math.cos(la); sLa = Math.sin(la);
 
     const halo = gx.createRadialGradient(cx, cy, R * .7, cx, cy, R * 1.25);
     halo.addColorStop(0, 'rgba(201,176,110,.10)'); halo.addColorStop(1, 'rgba(201,176,110,0)');
     gx.fillStyle = halo; gx.beginPath(); gx.arc(cx, cy, R * 1.25, 0, 7); gx.fill();
     gx.strokeStyle = 'rgba(201,176,110,.22)'; gx.lineWidth = 1; gx.beginPath(); gx.arc(cx, cy, R, 0, 7); gx.stroke();
 
+    const paths = Array.from({ length: DOT_LEVELS }, () => new Path2D());
     for (const p of dots3) {
       const [x, y, z] = project(p, R, cx, cy);
       if (z < 0) continue;
-      gx.fillStyle = `rgba(232,214,164,${.18 + z * .55})`;
-      gx.fillRect(x - .8, y - .8, 1.6, 1.6);
+      paths[Math.min(DOT_LEVELS - 1, z * DOT_LEVELS | 0)].rect(x - .8, y - .8, 1.6, 1.6);
     }
+    paths.forEach((path, i) => {
+      gx.fillStyle = `rgba(232,214,164,${.18 + (i + .5) / DOT_LEVELS * .55})`;
+      gx.fill(path);
+    });
     const home = toXYZ(...CITIES[0]);
     CITIES.forEach((c, i) => {
       const p3 = toXYZ(...c);
@@ -179,18 +200,35 @@
   }
   requestAnimationFrame(drawGlobe);
   new IntersectionObserver(([e]) => { gVisible = e.isIntersecting; }).observe(globe);
-  globe.addEventListener('pointerdown', e => { gDrag = { x: e.clientX, y: e.clientY, lon: gRot.lon, lat: gRot.lat }; globe.setPointerCapture(e.pointerId); });
+  globe.addEventListener('pointerdown', e => {
+    CP.hasGsap && gsap.killTweensOf(gAim);
+    gDrag = { x: e.clientX, y: e.clientY, lon: gAim.lon, lat: gAim.lat, px: e.clientX, pt: performance.now(), v: 0 };
+    gSpin = 0; globe.setPointerCapture(e.pointerId);
+  });
   globe.addEventListener('pointermove', e => {
     if (!gDrag) return;
-    gRot.lon = gDrag.lon - (e.clientX - gDrag.x) * .3;
-    gRot.lat = Math.max(-60, Math.min(70, gDrag.lat + (e.clientY - gDrag.y) * .3));
+    gAim.lon = gDrag.lon - (e.clientX - gDrag.x) * .3;
+    gAim.lat = Math.max(-60, Math.min(70, gDrag.lat + (e.clientY - gDrag.y) * .3));
+    // track horizontal speed (deg/s) so a flick keeps the globe turning
+    const now = performance.now(), dtm = (now - gDrag.pt) / 1000;
+    if (dtm > 0) gDrag.v = gDrag.v * .6 + (-(e.clientX - gDrag.px) * .3 / dtm) * .4;
+    gDrag.px = e.clientX; gDrag.pt = now;
   });
-  globe.addEventListener('pointerup', () => { gDrag = null; });
+  const release = () => {
+    if (!gDrag) return;
+    if (performance.now() - gDrag.pt < 80) gSpin = Math.max(-240, Math.min(240, gDrag.v));
+    gDrag = null;
+  };
+  globe.addEventListener('pointerup', release);
+  globe.addEventListener('pointercancel', release);
   $$('#cities li').forEach(li => {
     li.addEventListener('mouseenter', () => {
-      activeCity = +li.dataset.city; li.classList.add('is-on');
+      activeCity = +li.dataset.city; li.classList.add('is-on'); gSpin = 0;
       const [la, lo] = CITIES[activeCity];
-      CP.hasGsap && gsap.to(gRot, { lon: lo, lat: Math.max(10, la - 5), duration: 1.4, ease: 'expo.out' });
+      // take the short way round to the city's longitude
+      const to = gAim.lon + ((((lo - gAim.lon) % 360) + 540) % 360 - 180);
+      CP.hasGsap ? gsap.to(gAim, { lon: to, lat: Math.max(10, la - 5), duration: 1.6, ease: 'power3.inOut', overwrite: true })
+        : Object.assign(gAim, { lon: to, lat: Math.max(10, la - 5) });
     });
     li.addEventListener('mouseleave', () => { activeCity = -1; li.classList.remove('is-on'); });
   });
